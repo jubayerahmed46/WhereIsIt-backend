@@ -23,6 +23,20 @@ const client = new MongoClient(uri, {
   try {
     // connect mongodb
     await client.connect();
+    const db = client.db("LostAndFoundItemsDB");
+    const postCollection = db.collection("allPost");
+
+    // Add/post a Items
+    app.post("/posts", async (req, res) => {
+      try {
+        const doc = req.body;
+
+        const result = await postCollection.insertOne(doc);
+        res.send({ result });
+      } catch (error) {
+        res.status(500).send({ message: "Server Error" });
+      }
+    });
 
     console.log("database has pinned");
   } catch (error) {
