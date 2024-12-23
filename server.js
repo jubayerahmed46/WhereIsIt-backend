@@ -62,6 +62,18 @@ const client = new MongoClient(uri, {
         res.status(500).send({ message: "Server Error" });
       }
     });
+
+    // get my posts
+    app.get("/my-posts/:email", async (req, res) => {
+      try {
+        const filter = { email: req.params.email };
+        console.log(filter);
+        const result = await postCollection.find(filter).toArray();
+        res.send(result);
+      } catch (error) {
+        res.status(500).send({ message: "Server Error" });
+      }
+    });
     // Add/post a Items
     app.post("/posts", async (req, res) => {
       try {
@@ -99,8 +111,21 @@ const client = new MongoClient(uri, {
 
         // now post the recovered item
         const doc = req.body;
-        // const result = await reocveriesCollection.insertOne(doc);
-        // res.send(result);
+        const result = await reocveriesCollection.insertOne(doc);
+        res.send(result);
+      } catch (error) {
+        res.status(500).send({ message: "Server Error" });
+      }
+    });
+
+    // delete my post
+    app.delete("/delete/:postId", async (req, res) => {
+      try {
+        const id = req.params.postId;
+        const filter = { _id: new ObjectId(id) };
+        console.log(filter);
+        const result = await postCollection.deleteOne();
+        res.send(result);
       } catch (error) {
         res.status(500).send({ message: "Server Error" });
       }
