@@ -6,7 +6,8 @@
     "description": "Lost a black Oppo smartphone near the Dhaka University campus. If found, please contact.",
     "category": "electronics",
     "location": "Dhaka University, Dhaka",
-    "contactInfo": "whrereisit@help.com",
+    "name": "Jubayer Ahmed",
+    "email": "tanvir.hasan223@gmail.com",
     "date": "2024-12-22"
   },
   {
@@ -16,7 +17,8 @@
     "description": "Found a brown leather wallet near the Patenga beach. Contact me if you have lost it.",
     "category": "accessories",
     "location": "Patenga, Chittagong",
-    "contactInfo": "whrereisit@help.com",
+    "name": "Jubayer Ahmed",
+    "email": "mahmud.khan777@gmail.com",
     "date": "2024-12-22"
   },
   {
@@ -26,17 +28,19 @@
     "description": "A gray travel bag with clothes and essentials was lost near the Shahjalal University of Science and Technology.",
     "category": "luggage",
     "location": "SUST, Sylhet",
-    "contactInfo": "whrereisit@help.com",
+    "name": "Jubayer Ahmed",
+    "email": "rahman.islam932@gmail.com",
     "date": "2024-12-22"
   },
   {
-    "title": "Found  Bicycle at Barisal Railway Station",
+    "title": "Found Bicycle at Barisal Railway Station",
     "postType": "found",
     "thumbnail": "https://i.ibb.co.com/DW9x9JJ/Whats-App-Image-2024-12-05-at-15-12-19.webp",
     "description": "A blue bicycle was found near the Barisal railway station. Contact if you are the owner.",
     "category": "sports equipment",
     "location": "Barisal Railway Station",
-    "contactInfo": "whrereisit@help.com",
+    "name": "Jubayer Ahmed",
+    "email": "nazmul.bari465@gmail.com",
     "date": "2024-12-23"
   },
   {
@@ -46,7 +50,8 @@
     "description": "A set of house keys were lost near the Khulna bus terminal. Please reach out if found.",
     "category": "miscellaneous",
     "location": "Khulna Bus Terminal",
-    "contactInfo": "whrereisit@help.com",
+    "name": "Jubayer Ahmed",
+    "email": "arifursork823@gmail.com",
     "date": "2024-12-23"
   },
   {
@@ -56,7 +61,8 @@
     "description": "Found a winter jacket on the road near the Rajshahi College campus. Claim it with details.",
     "category": "clothing",
     "location": "Rajshahi College Campus",
-    "contactInfo": "whrereisit@help.com",
+    "name": "Jubayer Ahmed",
+    "email": "shahidul.care12@gmail.com",
     "date": "2024-12-24"
   },
   {
@@ -66,7 +72,8 @@
     "description": "A black tablet was lost near the Gulshan area. Please help in finding it.",
     "category": "electronics",
     "location": "Gulshan, Dhaka",
-    "contactInfo": "whrereisit@help.com",
+    "name": "Jubayer Ahmed",
+    "email": "kabir.rifat434@gmail.com",
     "date": "2024-12-24"
   },
   {
@@ -76,7 +83,8 @@
     "description": "Found a silver wristwatch near the Osmani Museum in Sylhet. Contact if it's yours.",
     "category": "accessories",
     "location": "Osmani Museum, Sylhet",
-    "contactInfo": "whrereisit@help.com",
+    "name": "Jubayer Ahmed",
+    "email": "saifuddin.hasan@gmail.com",
     "date": "2024-12-25"
   },
   {
@@ -86,7 +94,20 @@
     "description": "A black purse with ID cards and cash was lost near the Chittagong Port. Please reach out if you have found it.",
     "category": "accessories",
     "location": "Chittagong Port",
-    "contactInfo": "whrereisit@help.com",
+    "name": "Jubayer Ahmed",
+    "email": "rahim.gets983@gmail.com",
     "date": "2024-12-25"
   }
 ]
+
+{
+  "title": "Lost Black DSLR Camera at Cox's Bazar Beach",
+  "postType": "lost",
+  "thumbnail": "https://i.ibb.co.com/XYZ123/lost-camera.jpg",
+  "description": "Lost a black DSLR camera with an attached lens near the Cox's Bazar beach. Contains valuable photos. Please contact if found.",
+  "category": "electronics",
+  "location": "Cox's Bazar Beach, Cox's Bazar",
+  "name": "Jubayer Ahmed",
+  "email": "Jubayerdesigner46@gmail.com",
+  "date": "2024-12-20"
+}

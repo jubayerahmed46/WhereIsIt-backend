@@ -26,13 +26,35 @@ const client = new MongoClient(uri, {
     const db = client.db("LostAndFoundItemsDB");
     const postCollection = db.collection("allPost");
 
+    // get all posts || for latest post (tells in the query) sorting and getting 6 post
+    app.get("/posts", async (req, res) => {
+      try {
+        const paramData = req?.query?.latest;
+
+        let query = {};
+        let options = {};
+
+        if (paramData) {
+          options = {
+            sort: { date: -1 },
+            limit: 6,
+          };
+        }
+        const posts = await postCollection.find(query, options).toArray();
+
+        res.send(posts);
+      } catch (error) {
+        console.log(error.message);
+        res.status(500).send({ message: "Server Error" });
+      }
+    });
     // Add/post a Items
     app.post("/posts", async (req, res) => {
       try {
         const doc = req.body;
 
         const result = await postCollection.insertOne(doc);
-        res.send({ result });
+        res.send(result);
       } catch (error) {
         res.status(500).send({ message: "Server Error" });
       }
