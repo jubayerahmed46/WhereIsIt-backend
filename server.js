@@ -1,5 +1,5 @@
 const express = require("express");
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 require("dotenv").config();
 const cors = require("cors");
 const app = express();
@@ -25,6 +25,7 @@ const client = new MongoClient(uri, {
     await client.connect();
     const db = client.db("LostAndFoundItemsDB");
     const postCollection = db.collection("allPost");
+    const reocveriesCollection = db.collection("recoveriesItems");
 
     // get all posts || for latest post (tells in the query) sorting and getting 6 post
     app.get("/posts", async (req, res) => {
@@ -48,6 +49,19 @@ const client = new MongoClient(uri, {
         res.status(500).send({ message: "Server Error" });
       }
     });
+
+    // get single post
+    app.get("/posts/:id", async (req, res) => {
+      try {
+        const id = req.params.id;
+        const query = { _id: new ObjectId(id) };
+
+        const post = await postCollection.findOne(query);
+        res.send(post);
+      } catch (error) {
+        res.status(500).send({ message: "Server Error" });
+      }
+    });
     // Add/post a Items
     app.post("/posts", async (req, res) => {
       try {
@@ -55,6 +69,38 @@ const client = new MongoClient(uri, {
 
         const result = await postCollection.insertOne(doc);
         res.send(result);
+      } catch (error) {
+        res.status(500).send({ message: "Server Error" });
+      }
+    });
+
+    app.post("/recoveries", async (req, res) => {
+      try {
+        const postId = req.body.postId;
+        // set status of "recovered" data of postCollection
+
+        const filter = { _id: new ObjectId(postId) };
+        console.log(filter);
+        const updateWith = {
+          $set: {
+            status: "recovered",
+          },
+        };
+        const options = { upsert: true };
+
+        // update Current Post By Status
+        const updateStatus = await postCollection.updateOne(
+          filter,
+          updateWith,
+          options
+        );
+
+        console.log(updateStatus);
+
+        // now post the recovered item
+        const doc = req.body;
+        // const result = await reocveriesCollection.insertOne(doc);
+        // res.send(result);
       } catch (error) {
         res.status(500).send({ message: "Server Error" });
       }
