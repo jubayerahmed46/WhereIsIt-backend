@@ -44,14 +44,12 @@ const secretKey = process.env.SECRET_KEY;
 // step 4: call the next function so that it will got to the next step
 const varifyToken = (req, res, next) => {
   const token = req.cookies?.ACCESS_TOKEN;
-  console.log(token);
   if (!token) {
     return res.status(401).send({ message: "Unauthorized" });
   }
 
   jwt.verify(token, secretKey, (err, decoded) => {
     if (err) {
-      console.log("errr");
       return res.status(401).send({ message: "Unauthorized" });
     }
 
@@ -187,6 +185,7 @@ const varifyToken = (req, res, next) => {
       }
     });
 
+    // post new data on "recoveries" collection
     app.post("/recoveries", varifyToken, async (req, res) => {
       try {
         const postId = req.body.postId;
@@ -207,6 +206,21 @@ const varifyToken = (req, res, next) => {
         const doc = req.body;
         const result = await reocveriesCollection.insertOne(doc);
         res.send(result);
+      } catch (error) {
+        res.status(500).send({ message: "Server Error" });
+      }
+    });
+
+    // update my post/data
+    app.patch("/my-posts/update/:postId", async (req, res) => {
+      try {
+        const id = req.params?.postId;
+        const query = { _id: new ObjectId(id) };
+        console.log(req.body);
+        const updatedPost = {
+          $set: req.body,
+        };
+        const result = await postCollection.updateOne(query, updatedPost);
       } catch (error) {
         res.status(500).send({ message: "Server Error" });
       }
