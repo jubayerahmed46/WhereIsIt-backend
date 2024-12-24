@@ -35,6 +35,32 @@ const client = new MongoClient(uri, {
 // step 3: now copy it and paste in your .env file
 const secretKey = process.env.SECRET_KEY;
 
+// validate token as a middleware
+// step 1: get the token from cookies
+// step 2: if the token in undefined/notIncluded through an error of "Unauthorized"
+// step 3: verify token (it takes a callback func in its last param)
+// step 3.1: if here is any secret/token related issue through again error
+// step 3.2: if everything is fine give the decoded user data in request obj
+// step 4: call the next function so that it will got to the next step
+const varifyToken = (req, res, next) => {
+  const token = req.cookies?.ACCESS_TOKEN;
+  console.log(token);
+  if (!token) {
+    return res.status(401).send({ message: "Unauthorized" });
+  }
+
+  jwt.verify(token, secretKey, (err, decoded) => {
+    if (err) {
+      console.log("errr");
+      return res.status(401).send({ message: "Unauthorized" });
+    }
+
+    req.user = decoded;
+
+    next();
+  });
+};
+
 (async function () {
   try {
     // connect mongodb
@@ -59,7 +85,7 @@ const secretKey = process.env.SECRET_KEY;
     });
 
     // clear the JWT token if the user logout or expire the cookie
-    app.post("/remove-jwt", (req, res) => {
+    app.delete("/remove-jwt", (req, res) => {
       console.log(req.cookies);
       res
         .clearCookie("ACCESS_TOKEN", {
@@ -70,6 +96,7 @@ const secretKey = process.env.SECRET_KEY;
         .send({ message: "Cookie logout" });
     });
     // get all posts || for latest post (tells in the query) sorting and getting 6 post
+    // && get searched/filtered posts/data
     app.get("/posts", async (req, res) => {
       try {
         const searchText = req?.query?.searchText;
@@ -102,7 +129,7 @@ const secretKey = process.env.SECRET_KEY;
     });
 
     // get single post
-    app.get("/posts/:id", async (req, res) => {
+    app.get("/posts/:id", varifyToken, async (req, res) => {
       try {
         const id = req.params.id;
         const query = { _id: new ObjectId(id) };
@@ -115,8 +142,12 @@ const secretKey = process.env.SECRET_KEY;
     });
 
     // get my posts
-    app.get("/my-posts/:email", async (req, res) => {
+    app.get("/my-posts/:email", varifyToken, async (req, res) => {
       try {
+        if (req?.user?.email !== req.params.email) {
+          return res.status(403).send({ message: "Forbidden" });
+        }
+
         const filter = { email: req.params.email };
         const result = await postCollection.find(filter).toArray();
         res.send(result);
@@ -126,9 +157,13 @@ const secretKey = process.env.SECRET_KEY;
     });
 
     // get my all recovered post
-    app.get("/recovered", async (req, res) => {
+    app.get("/recovered", varifyToken, async (req, res) => {
       try {
-        const email = req.query.email;
+        const email = req.query?.email;
+
+        if (email !== req?.user?.email) {
+          return res.status(403).send({ message: "Forbidden" });
+        }
 
         const query = { email: email, status: "recovered" };
         const recoveredPosts = await postCollection.find(query).toArray();
@@ -140,8 +175,8 @@ const secretKey = process.env.SECRET_KEY;
         res.status(500).send({ message: "Server Error" });
       }
     });
-    // Add/post a Items && get searched/filtered posts/data
-    app.post("/posts", async (req, res) => {
+    // Add/post a Items
+    app.post("/posts", varifyToken, async (req, res) => {
       try {
         const doc = req.body;
 
@@ -152,11 +187,10 @@ const secretKey = process.env.SECRET_KEY;
       }
     });
 
-    app.post("/recoveries", async (req, res) => {
+    app.post("/recoveries", varifyToken, async (req, res) => {
       try {
         const postId = req.body.postId;
         // set status of "recovered" data of postCollection
-
         const filter = { _id: new ObjectId(postId) };
 
         const updateWith = {
@@ -179,11 +213,14 @@ const secretKey = process.env.SECRET_KEY;
     });
 
     // delete my post
-    app.delete("/delete/:postId", async (req, res) => {
+    app.delete("/delete/:postId", varifyToken, async (req, res) => {
       try {
+        if (req.query?.email !== req?.user?.email) {
+          return res.status(403).send({ message: "Forbidden" });
+        }
         const id = req.params.postId;
         const filter = { _id: new ObjectId(id) };
-        const result = await postCollection.deleteOne(filter);
+        // const result = await postCollection.deleteOne(filter);
         res.send(result);
       } catch (error) {
         res.status(500).send({ message: "Server Error" });
