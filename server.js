@@ -30,22 +30,32 @@ const client = new MongoClient(uri, {
     // get all posts || for latest post (tells in the query) sorting and getting 6 post
     app.get("/posts", async (req, res) => {
       try {
-        const paramData = req?.query?.latest;
+        const searchText = req?.query?.searchText;
 
         let query = {};
         let options = {};
 
-        if (paramData) {
+        if (searchText === "latest") {
           options = {
             sort: { date: -1 },
             limit: 6,
           };
+        } else if (searchText) {
+          query = {
+            $or: [
+              { title: { $regex: searchText, $options: "i" } },
+              { location: { $regex: searchText, $options: "i" } },
+            ],
+          };
         }
-        const posts = await postCollection.find(query, options).toArray();
 
+        const posts = await postCollection.find(query, options).toArray();
+        if (!posts?.length) {
+          return res.status(404).json({ message: "No matching data found" });
+        }
+        console.log(posts);
         res.send(posts);
       } catch (error) {
-        console.log(error.message);
         res.status(500).send({ message: "Server Error" });
       }
     });
@@ -83,14 +93,15 @@ const client = new MongoClient(uri, {
         const query = { email: email, status: "recovered" };
         const recoveredPosts = await postCollection.find(query).toArray();
         if (!recoveredPosts.length) {
-          res.status(404).send({ message: "No data found" });
+          return res.status(404).send({ message: "No data found" });
         }
+        console.log(recoveredPosts);
         res.send(recoveredPosts);
       } catch (error) {
         res.status(500).send({ message: "Server Error" });
       }
     });
-    // Add/post a Items
+    // Add/post a Items && get searched/filtered posts/data
     app.post("/posts", async (req, res) => {
       try {
         const doc = req.body;
@@ -117,13 +128,7 @@ const client = new MongoClient(uri, {
         const options = { upsert: true };
 
         // update Current Post By Status
-        const updateStatus = await postCollection.updateOne(
-          filter,
-          updateWith,
-          options
-        );
-
-        console.log(updateStatus);
+        await postCollection.updateOne(filter, updateWith, options);
 
         // now post the recovered item
         const doc = req.body;
