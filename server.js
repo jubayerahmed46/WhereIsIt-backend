@@ -212,7 +212,7 @@ const varifyToken = (req, res, next) => {
     });
 
     // update my post/data
-    app.patch("/my-posts/update/:postId", async (req, res) => {
+    app.patch("/my-posts/update/:postId", varifyToken, async (req, res) => {
       try {
         const id = req.params?.postId;
         const query = { _id: new ObjectId(id) };
@@ -221,6 +221,7 @@ const varifyToken = (req, res, next) => {
           $set: req.body,
         };
         const result = await postCollection.updateOne(query, updatedPost);
+        res.send(result);
       } catch (error) {
         res.status(500).send({ message: "Server Error" });
       }
@@ -229,12 +230,13 @@ const varifyToken = (req, res, next) => {
     // delete my post
     app.delete("/delete/:postId", varifyToken, async (req, res) => {
       try {
+        console.log("delete");
         if (req.query?.email !== req?.user?.email) {
           return res.status(403).send({ message: "Forbidden" });
         }
         const id = req.params.postId;
         const filter = { _id: new ObjectId(id) };
-        // const result = await postCollection.deleteOne(filter);
+        const result = await postCollection.deleteOne(filter);
         res.send(result);
       } catch (error) {
         res.status(500).send({ message: "Server Error" });
