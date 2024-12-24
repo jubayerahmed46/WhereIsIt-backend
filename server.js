@@ -74,6 +74,22 @@ const client = new MongoClient(uri, {
         res.status(500).send({ message: "Server Error" });
       }
     });
+
+    // get my all recovered post
+    app.get("/recovered", async (req, res) => {
+      try {
+        const email = req.query.email;
+
+        const query = { email: email, status: "recovered" };
+        const recoveredPosts = await postCollection.find(query).toArray();
+        if (!recoveredPosts.length) {
+          res.status(404).send({ message: "No data found" });
+        }
+        res.send(recoveredPosts);
+      } catch (error) {
+        res.status(500).send({ message: "Server Error" });
+      }
+    });
     // Add/post a Items
     app.post("/posts", async (req, res) => {
       try {
@@ -124,7 +140,7 @@ const client = new MongoClient(uri, {
         const id = req.params.postId;
         const filter = { _id: new ObjectId(id) };
         console.log(filter);
-        const result = await postCollection.deleteOne();
+        const result = await postCollection.deleteOne(filter);
         res.send(result);
       } catch (error) {
         res.status(500).send({ message: "Server Error" });
