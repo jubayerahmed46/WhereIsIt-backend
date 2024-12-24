@@ -1,13 +1,22 @@
-const express = require("express");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
+const cookieParser = require("cookie-parser");
+const jwt = require("jsonwebtoken");
+const express = require("express");
 require("dotenv").config();
 const cors = require("cors");
+
 const app = express();
 
 const port = process.env.PORT;
 // middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:5173"],
+    credentials: true,
+  })
+);
 app.use(express.json());
+app.use(cookieParser());
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.1zs5t.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
@@ -19,6 +28,13 @@ const client = new MongoClient(uri, {
   },
 });
 
+// secret key from .env file ->
+// steps to create SECRET_KEY
+// step 1: open terminal and input > node
+// step 2: require('crypto').randomBytes(64).toString('hex') // for creating 64 bytes hexaDec code
+// step 3: now copy it and paste in your .env file
+const secretKey = process.env.SECRET_KEY;
+
 (async function () {
   try {
     // connect mongodb
@@ -27,6 +43,32 @@ const client = new MongoClient(uri, {
     const postCollection = db.collection("allPost");
     const reocveriesCollection = db.collection("recoveriesItems");
 
+    // CREATE JWT token after user authenticate and send it to to the client side
+    app.post("/create-jwt", (req, res) => {
+      console.log(req.body);
+      const payload = req.body; // user email from client
+      const token = jwt.sign(payload, secretKey, {});
+
+      res
+        .cookie("ACCESS_TOKEN", token, {
+          httpOnly: false,
+          secure: false,
+          sameSite: false,
+        })
+        .send({ message: "Login Success!" });
+    });
+
+    // clear the JWT token if the user logout or expire the cookie
+    app.post("/remove-jwt", (req, res) => {
+      console.log(req.cookies);
+      res
+        .clearCookie("ACCESS_TOKEN", {
+          httpOnly: true,
+          secure: false,
+          sameSite: "lax",
+        })
+        .send({ message: "Cookie logout" });
+    });
     // get all posts || for latest post (tells in the query) sorting and getting 6 post
     app.get("/posts", async (req, res) => {
       try {
@@ -53,7 +95,6 @@ const client = new MongoClient(uri, {
         if (!posts?.length) {
           return res.status(404).json({ message: "No matching data found" });
         }
-        console.log(posts);
         res.send(posts);
       } catch (error) {
         res.status(500).send({ message: "Server Error" });
@@ -77,7 +118,6 @@ const client = new MongoClient(uri, {
     app.get("/my-posts/:email", async (req, res) => {
       try {
         const filter = { email: req.params.email };
-        console.log(filter);
         const result = await postCollection.find(filter).toArray();
         res.send(result);
       } catch (error) {
@@ -95,7 +135,6 @@ const client = new MongoClient(uri, {
         if (!recoveredPosts.length) {
           return res.status(404).send({ message: "No data found" });
         }
-        console.log(recoveredPosts);
         res.send(recoveredPosts);
       } catch (error) {
         res.status(500).send({ message: "Server Error" });
@@ -119,7 +158,7 @@ const client = new MongoClient(uri, {
         // set status of "recovered" data of postCollection
 
         const filter = { _id: new ObjectId(postId) };
-        console.log(filter);
+
         const updateWith = {
           $set: {
             status: "recovered",
@@ -144,7 +183,6 @@ const client = new MongoClient(uri, {
       try {
         const id = req.params.postId;
         const filter = { _id: new ObjectId(id) };
-        console.log(filter);
         const result = await postCollection.deleteOne(filter);
         res.send(result);
       } catch (error) {
