@@ -97,17 +97,16 @@
     "name": "Jubayer Ahmed",
     "email": "rahim.gets983@gmail.com",
     "date": "2024-12-25"
+  },
+  {
+    "title": "Lost Black DSLR Camera at Cox's Bazar Beach",
+    "postType": "lost",
+    "thumbnail": "https://i.ibb.co.com/XYZ123/lost-camera.jpg",
+    "description": "Lost a black DSLR camera with an attached lens near the Cox's Bazar beach. Contains valuable photos. Please contact if found.",
+    "category": "electronics",
+    "location": "Cox's Bazar Beach, Cox's Bazar",
+    "name": "Jubayer Ahmed",
+    "email": "Jubayerdesigner46@gmail.com",
+    "date": "2024-12-20"
   }
 ]
-
-{
-  "title": "Lost Black DSLR Camera at Cox's Bazar Beach",
-  "postType": "lost",
-  "thumbnail": "https://i.ibb.co.com/XYZ123/lost-camera.jpg",
-  "description": "Lost a black DSLR camera with an attached lens near the Cox's Bazar beach. Contains valuable photos. Please contact if found.",
-  "category": "electronics",
-  "location": "Cox's Bazar Beach, Cox's Bazar",
-  "name": "Jubayer Ahmed",
-  "email": "Jubayerdesigner46@gmail.com",
-  "date": "2024-12-20"
-}
