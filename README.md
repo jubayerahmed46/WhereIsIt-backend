@@ -1,4 +1,4 @@
-# (WhereIsIt) - A Lost and Found Items Related Website
+# (WhereIsIt) - Lost and Found Website
 
 ## Purpose
 

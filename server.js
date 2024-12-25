@@ -66,6 +66,7 @@ const varifyToken = (req, res, next) => {
     const db = client.db("LostAndFoundItemsDB");
     const postCollection = db.collection("allPost");
     const reocveriesCollection = db.collection("recoveriesItems");
+    const reviewsCollection = db.collection("allReviews");
 
     // CREATE JWT token after user authenticate and send it to to the client side
     app.post("/create-jwt", (req, res) => {
@@ -173,6 +174,17 @@ const varifyToken = (req, res, next) => {
         res.status(500).send({ message: "Server Error" });
       }
     });
+
+    // get all review
+    app.get("/reviews", varifyToken, async (req, res) => {
+      try {
+        const result = await reviewsCollection.find().toArray();
+        console.log(result);
+        res.send(result);
+      } catch (error) {
+        res.status(500).send({ message: "Server Error" });
+      }
+    });
     // Add/post a Items
     app.post("/posts", varifyToken, async (req, res) => {
       try {
@@ -211,12 +223,22 @@ const varifyToken = (req, res, next) => {
       }
     });
 
+    // add new review
+    app.post("/reviews", varifyToken, async (req, res) => {
+      try {
+        const doc = req.body;
+        const result = await reviewsCollection.insertOne(doc);
+        res.send(result);
+      } catch (error) {
+        res.status(500).send({ message: "Server Error" });
+      }
+    });
+
     // update my post/data
     app.patch("/my-posts/update/:postId", varifyToken, async (req, res) => {
       try {
         const id = req.params?.postId;
         const query = { _id: new ObjectId(id) };
-        console.log(req.body);
         const updatedPost = {
           $set: req.body,
         };
@@ -230,7 +252,6 @@ const varifyToken = (req, res, next) => {
     // delete my post
     app.delete("/delete/:postId", varifyToken, async (req, res) => {
       try {
-        console.log("delete");
         if (req.query?.email !== req?.user?.email) {
           return res.status(403).send({ message: "Forbidden" });
         }

@@ -1,112 +1,52 @@
 [
   {
-    "title": "Lost Oppo Smartphone in Dhaka University Area",
-    "postType": "lost",
-    "thumbnail": "https://i.ibb.co.com/LNDyKxx/Android-Find-My-Phone-w810h462.webp",
-    "description": "Lost a black Oppo smartphone near the Dhaka University campus. If found, please contact.",
-    "category": "electronics",
-    "location": "Dhaka University, Dhaka",
-    "name": "Jubayer Ahmed",
-    "email": "tanvir.hasan223@gmail.com",
-    "date": "2024-12-22"
+    "reviewer": {
+      "name": "Sarah J.",
+      "photo": "https://i.ibb.co/5W90V9W/download-1.jpg"
+    },
+    "description": "This Lost and Found platform has been a lifesaver! I lost my wallet at a park, and within a day of posting about it, someone reached out to me. The seamless interaction and user-friendly interface made the whole process stress-free. Truly an invaluable service!",
+    "reviewText": "Grand User",
+    "date": "12/20/2024",
+    "rating": 5
   },
   {
-    "title": "Found Leather Wallet in Patenga, Chittagong",
-    "postType": "found",
-    "thumbnail": "https://i.ibb.co.com/R98BWmG/images-1.jpg",
-    "description": "Found a brown leather wallet near the Patenga beach. Contact me if you have lost it.",
-    "category": "accessories",
-    "location": "Patenga, Chittagong",
-    "name": "Jubayer Ahmed",
-    "email": "mahmud.khan777@gmail.com",
-    "date": "2024-12-22"
+    "reviewer": {
+      "name": "Michael R.",
+      "photo": "https://i.ibb.co/7gw8Yny/images-5.jpg"
+    },
+    "description": "I found a set of keys at a local cafe and wasn't sure how to get them back to the owner. This website made it incredibly easy to report the found item and connect with the rightful owner. The experience was straightforward, and I felt great helping someone in need!",
+    "reviewText": "Grand User",
+    "date": "12/22/2024",
+    "rating": 4
   },
   {
-    "title": "Lost Gray Travel Bag Near Shahjalal University, Sylhet",
-    "postType": "lost",
-    "thumbnail": "https://i.ibb.co.com/DK4kGy1/images-2.jpg",
-    "description": "A gray travel bag with clothes and essentials was lost near the Shahjalal University of Science and Technology.",
-    "category": "luggage",
-    "location": "SUST, Sylhet",
-    "name": "Jubayer Ahmed",
-    "email": "rahman.islam932@gmail.com",
-    "date": "2024-12-22"
+    "reviewer": {
+      "name": "Emily K.",
+      "photo": "https://i.ibb.co/b2VNFxT/images-6.jpg"
+    },
+    "description": "The Lost and Found website is a fantastic tool for the community. I misplaced my laptop during a conference, and thanks to this platform, I was able to retrieve it the very next day. The user authentication and secure file uploads ensured my information was safe throughout the process.",
+    "reviewText": "Grand User",
+    "date": "12/18/2024",
+    "rating": 5
   },
   {
-    "title": "Found Bicycle at Barisal Railway Station",
-    "postType": "found",
-    "thumbnail": "https://i.ibb.co.com/DW9x9JJ/Whats-App-Image-2024-12-05-at-15-12-19.webp",
-    "description": "A blue bicycle was found near the Barisal railway station. Contact if you are the owner.",
-    "category": "sports equipment",
-    "location": "Barisal Railway Station",
-    "name": "Jubayer Ahmed",
-    "email": "nazmul.bari465@gmail.com",
-    "date": "2024-12-23"
+    "reviewer": {
+      "name": "David L.",
+      "photo": "https://i.ibb.co/DQ6hL3y/download.jpg"
+    },
+    "description": "What a brilliant idea! This platform not only helps reunite people with their lost belongings but also offers an excellent opportunity for developers to gain hands-on experience in full-stack development, database management, and API integration. Kudos to the team behind this project!",
+    "reviewText": "Grand User",
+    "date": "12/19/2024",
+    "rating": 4
   },
   {
-    "title": "Lost House Keys Near Khulna Bus Terminal",
-    "postType": "lost",
-    "thumbnail": "https://i.ibb.co.com/mHwssDs/images-3.jpg",
-    "description": "A set of house keys were lost near the Khulna bus terminal. Please reach out if found.",
-    "category": "miscellaneous",
-    "location": "Khulna Bus Terminal",
-    "name": "Jubayer Ahmed",
-    "email": "arifursork823@gmail.com",
-    "date": "2024-12-23"
-  },
-  {
-    "title": "Found Winter Jacket Near Rajshahi College Campus",
-    "postType": "found",
-    "thumbnail": "https://i.ibb.co.com/8Mrhn4N/cd5907fc-05ef-4e07-97d5-5df26a03c35f-3560x2581.jpg",
-    "description": "Found a winter jacket on the road near the Rajshahi College campus. Claim it with details.",
-    "category": "clothing",
-    "location": "Rajshahi College Campus",
-    "name": "Jubayer Ahmed",
-    "email": "shahidul.care12@gmail.com",
-    "date": "2024-12-24"
-  },
-  {
-    "title": "Lost Black Tablet Near Gulshan, Dhaka",
-    "postType": "lost",
-    "thumbnail": "https://i.ibb.co.com/g3rPKJy/hqdefault.jpg",
-    "description": "A black tablet was lost near the Gulshan area. Please help in finding it.",
-    "category": "electronics",
-    "location": "Gulshan, Dhaka",
-    "name": "Jubayer Ahmed",
-    "email": "kabir.rifat434@gmail.com",
-    "date": "2024-12-24"
-  },
-  {
-    "title": "Found Watch Near Osmani Museum, Sylhet",
-    "postType": "found",
-    "thumbnail": "https://i.ibb.co.com/QYSc4XF/Rolex-Blog-800x450.jpg",
-    "description": "Found a silver wristwatch near the Osmani Museum in Sylhet. Contact if it's yours.",
-    "category": "accessories",
-    "location": "Osmani Museum, Sylhet",
-    "name": "Jubayer Ahmed",
-    "email": "saifuddin.hasan@gmail.com",
-    "date": "2024-12-25"
-  },
-  {
-    "title": "Lost Black Purse Near Chittagong Port",
-    "postType": "lost",
-    "thumbnail": "https://i.ibb.co.com/0YNQzLX/hero-image-fill-size-1248x702-v1699836556.jpg",
-    "description": "A black purse with ID cards and cash was lost near the Chittagong Port. Please reach out if you have found it.",
-    "category": "accessories",
-    "location": "Chittagong Port",
-    "name": "Jubayer Ahmed",
-    "email": "rahim.gets983@gmail.com",
-    "date": "2024-12-25"
-  },
-  {
-    "title": "Lost Black DSLR Camera at Cox's Bazar Beach",
-    "postType": "lost",
-    "thumbnail": "https://i.ibb.co.com/XYZ123/lost-camera.jpg",
-    "description": "Lost a black DSLR camera with an attached lens near the Cox's Bazar beach. Contains valuable photos. Please contact if found.",
-    "category": "electronics",
-    "location": "Cox's Bazar Beach, Cox's Bazar",
-    "name": "Jubayer Ahmed",
-    "email": "Jubayerdesigner46@gmail.com",
-    "date": "2024-12-20"
+    "reviewer": {
+      "name": "Lisa M.",
+      "photo": "https://i.ibb.co/stYZpkd/images-4.jpg"
+    },
+    "description": "Navigating through this Lost and Found website is a breeze. The intuitive design and efficient search function allowed me to find my lost bracelet within hours. The integration of user authentication and secure communication features adds an extra layer of confidence in the process.",
+    "reviewText": "Grand User",
+    "date": "12/21/2024",
+    "rating": 5
   }
 ]
