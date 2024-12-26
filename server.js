@@ -14,7 +14,8 @@ app.use(
     origin: [
       "http://localhost:5173",
       "https://whereisit-84e04.web.app",
-      "whereisit-84e04.firebaseapp.com",
+      "https://whereisit-84e04.firebaseapp.com",
+      "https://whereisit-lostandfound123443.surge.sh",
     ],
 
     credentials: true,
