@@ -50,12 +50,12 @@ const secretKey = process.env.SECRET_KEY;
 const varifyToken = (req, res, next) => {
   const token = req.cookies?.ACCESS_TOKEN;
   if (!token) {
-    return res.status(401).send({ message: "Unauthorized cd a" });
+    return res.status(401).send({ message: "Unauthorized (no token)" });
   }
 
   jwt.verify(token, secretKey, (err, decoded) => {
     if (err) {
-      return res.status(401).send({ message: "Unlauthorized cd" });
+      return res.status(401).send({ message: "Unlauthorized (verify failed)" });
     }
 
     req.user = decoded;
@@ -67,7 +67,7 @@ const varifyToken = (req, res, next) => {
 (async function () {
   try {
     // connect mongodb
-    await client.connect();
+    // await client.connect();
     const db = client.db("LostAndFoundItemsDB");
     const postCollection = db.collection("allPost");
     const reocveriesCollection = db.collection("recoveriesItems");
@@ -80,9 +80,9 @@ const varifyToken = (req, res, next) => {
 
       res
         .cookie("ACCESS_TOKEN", token, {
-          httpOnly: false,
-          secure: false,
-          sameSite: false,
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
         })
         .send({ message: "Login Success!" });
     });
@@ -92,8 +92,9 @@ const varifyToken = (req, res, next) => {
       res
         .clearCookie("ACCESS_TOKEN", {
           httpOnly: true,
-          secure: false,
-          sameSite: "lax",
+          secure: process.env.NODE_ENV === "production",
+          sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+          maxAge: 0,
         })
         .send({ message: "Cookie logout" });
     });
