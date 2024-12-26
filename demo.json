@@ -48,5 +48,17 @@
     "reviewText": "Grand User",
     "date": "12/21/2024",
     "rating": 5
+  },
+  {
+    "_id": "676bce1147c5f79377345ce3",
+    "title": "Lost Oppo Smartphone in Dhaka University Area",
+    "postType": "lost",
+    "thumbnail": "https://i.ibb.co.com/LNDyKxx/Android-Find-My-Phone-w810h462.webp",
+    "description": "Lost a black Oppo smartphone near the Dhaka University campus. If found, please contact.",
+    "category": "electronics",
+    "location": "Dhaka University, Dhaka",
+    "name": "Tanvir Hasan",
+    "email": "tanvir.hasan223@gmail.com",
+    "date": "2024-12-22"
   }
 ]

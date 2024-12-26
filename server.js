@@ -11,7 +11,12 @@ const port = process.env.PORT;
 // middleware
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
+    origin: [
+      "http://localhost:5173",
+      "https://whereisit-84e04.web.app",
+      "whereisit-84e04.firebaseapp.com",
+    ],
+
     credentials: true,
   })
 );
@@ -45,12 +50,12 @@ const secretKey = process.env.SECRET_KEY;
 const varifyToken = (req, res, next) => {
   const token = req.cookies?.ACCESS_TOKEN;
   if (!token) {
-    return res.status(401).send({ message: "Unauthorized" });
+    return res.status(401).send({ message: "Unauthorized cd a" });
   }
 
   jwt.verify(token, secretKey, (err, decoded) => {
     if (err) {
-      return res.status(401).send({ message: "Unauthorized" });
+      return res.status(401).send({ message: "Unlauthorized cd" });
     }
 
     req.user = decoded;
@@ -70,7 +75,6 @@ const varifyToken = (req, res, next) => {
 
     // CREATE JWT token after user authenticate and send it to to the client side
     app.post("/create-jwt", (req, res) => {
-      console.log(req.body);
       const payload = req.body; // user email from client
       const token = jwt.sign(payload, secretKey, {});
 
@@ -84,8 +88,7 @@ const varifyToken = (req, res, next) => {
     });
 
     // clear the JWT token if the user logout or expire the cookie
-    app.delete("/remove-jwt", (req, res) => {
-      console.log(req.cookies);
+    app.post("/remove-jwt", (req, res) => {
       res
         .clearCookie("ACCESS_TOKEN", {
           httpOnly: true,
@@ -98,16 +101,20 @@ const varifyToken = (req, res, next) => {
     // && get searched/filtered posts/data
     app.get("/posts", async (req, res) => {
       try {
-        const searchText = req?.query?.searchText;
+        const searchText = req.query?.searchText;
+
+        // for pagination data
+        const page = req.query?.page || 0;
+        const size = req.query?.size || 6;
 
         let query = {};
-        let options = {};
+        let options = {
+          skip: parseInt(page * size),
+          limit: parseInt(size),
+        };
 
         if (searchText === "latest") {
-          options = {
-            sort: { date: -1 },
-            limit: 6,
-          };
+          options.sort = { date: -1 };
         } else if (searchText) {
           query = {
             $or: [
@@ -159,7 +166,6 @@ const varifyToken = (req, res, next) => {
     app.get("/recovered", varifyToken, async (req, res) => {
       try {
         const email = req.query?.email;
-
         if (email !== req?.user?.email) {
           return res.status(403).send({ message: "Forbidden" });
         }
@@ -176,15 +182,25 @@ const varifyToken = (req, res, next) => {
     });
 
     // get all review
-    app.get("/reviews", varifyToken, async (req, res) => {
+    app.get("/reviews", async (req, res) => {
       try {
         const result = await reviewsCollection.find().toArray();
-        console.log(result);
         res.send(result);
       } catch (error) {
         res.status(500).send({ message: "Server Error" });
       }
     });
+
+    // get total post count for pagination
+    app.get("/total-post-count", async (req, res) => {
+      try {
+        const count = await postCollection.estimatedDocumentCount();
+        res.send({ count });
+      } catch (error) {
+        res.status(500).send({ message: "Server Error" });
+      }
+    });
+
     // Add/post a Items
     app.post("/posts", varifyToken, async (req, res) => {
       try {
