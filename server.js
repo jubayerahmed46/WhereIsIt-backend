@@ -7,7 +7,7 @@ const cors = require("cors");
 
 const app = express();
 
-const port = process.env.PORT;
+const port = process.env.PORT || 8888;
 // middleware
 app.use(
   cors({
@@ -56,7 +56,7 @@ const varifyToken = (req, res, next) => {
 
   jwt.verify(token, secretKey, (err, decoded) => {
     if (err) {
-      return res.status(401).send({ message: "Unlauthorized (verify failed)" });
+      return res.status(401).send({ message: "Unauthorized (verify failed)" });
     }
 
     req.user = decoded;
@@ -68,7 +68,7 @@ const varifyToken = (req, res, next) => {
 (async function () {
   try {
     // connect mongodb
-    // await client.connect();
+    await client.connect();
     const db = client.db("LostAndFoundItemsDB");
     const postCollection = db.collection("allPost");
     const reocveriesCollection = db.collection("recoveriesItems");
@@ -117,6 +117,7 @@ const varifyToken = (req, res, next) => {
 
         if (searchText === "latest") {
           options.sort = { date: -1 };
+          options.limit = 3;
         } else if (searchText) {
           query = {
             $or: [
